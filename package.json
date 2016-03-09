@@ -1,0 +1,24 @@
+{
+  "name": "jello-postpackager-performance-framework",
+  "version": "2.0.0",
+  "description": "performance framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiajianrong/jello-postpackager-performance-framework.git"
+  },
+  "keywords": [
+    "web",
+    "load",
+    "performance"
+  ],
+  "author": "jiajianrong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jiajianrong/jello-postpackager-performance-framework/issues"
+  },
+  "homepage": "https://github.com/jiajianrong/jello-postpackager-performance-framework#readme"
+}
