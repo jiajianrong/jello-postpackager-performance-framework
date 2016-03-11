@@ -22,9 +22,27 @@ module.exports = function (ret, conf, settings, opt) {
                       '&headSize=' + p.headSize + 
                       '&docSize=' + p.docSize;
             
-            var p_script=document.createElement('SCRIPT');
-            p_script.src=src;
-            document.body.appendChild(p_script);
+            (function(src) {
+                var p_script,
+                    
+                    sendTimer = setTimeout(function(){
+                        clearTimeout(sendTimer);
+                        sendTimer = null;
+                        
+                        p_script = document.createElement('SCRIPT');
+                        p_script.src = src;
+                        document.body.appendChild(p_script);
+                    },0),
+                    
+                    timeoutTimer = setTimeout( function(){
+                        clearTimeout(timeoutTimer);
+                        timeoutTimer = null;
+                        
+                        p_script.onreadystatechange = p_script.onload = p_script.onerror = p_script.readyState = null;
+                        document.body.removeChild(p_script);
+                    }, 3000 );
+            })(src)
+
         })
         .toString()
         .replace( '{{{urlPrefix}}}', settings.urlPrefix );
@@ -33,14 +51,10 @@ module.exports = function (ret, conf, settings, opt) {
 
     var performance = {
         headStart:    '<script> var jr=jr||{}; jr.performance=jr.performance||{}; jr.performance.headStart = new Date().getTime(); </script>',
-        
         headEnd:      '<script> jr.performance.headEnd=new Date().getTime(); </script>',
-        
         jsStart:      '<script> jr.performance.jsStart=new Date().getTime(); </script>',
-        
         jsEnd:        '<script> jr.performance.jsEnd=new Date().getTime(); </script>',
-        
-        docReadyHandler: "<script> document.addEventListener( 'DOMContentLoaded', " + fStr + " )</script>"
+        docReadyHandler: "#[[<script> document.addEventListener( 'DOMContentLoaded', " + fStr + " )</script>]]#"
     }
     
     
