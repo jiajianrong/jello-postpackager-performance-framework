@@ -70,22 +70,22 @@ module.exports = function (ret, conf, settings, opt) {
             
             // <head>开始 --- 开始记录
             content = content.replace(/(\<\s*head\s*\>)/ig, function() {
-                return RegExp.$1 + performance.headStart;
+                return RegExp.$1 + '\n    ' + performance.headStart;
             });
             
-            // </head>结束 --- 白屏时间
-            content = content.replace(/(\<\s*\/\s*head\s*\>)/ig, function() {
-                return RegExp.$1 + performance.headEnd;
+            // </body>开始 --- 白屏时间
+            content = content.replace(/(\<\s*body\s*\>)/ig, function() {
+                return RegExp.$1 + '\n    ' + performance.headEnd;
             });
             
             // __FRAMEWORK_CONFIG__钩子前 --- document渲染时间，以及js开始加载时间
             content = content.replace(/(\b__FRAMEWORK_CONFIG__\b)/g, function() {
-                return performance.jsStart + RegExp.$1;
+                return performance.jsStart + '\n    ' + RegExp.$1;
             });
             
             // </body>结束 --- js执行完毕时间；发送统计数据
             content = content.replace(/(\<\s*\/\s*body\s*\>)/ig, function() {
-                return performance.jsEnd + performance.docReadyHandler + RegExp.$1;
+                return '\n    ' + performance.jsEnd + '\n    ' + performance.docReadyHandler + '\n' + RegExp.$1;
             });
             
             file.setContent(content);
