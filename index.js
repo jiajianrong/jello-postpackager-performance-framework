@@ -64,7 +64,7 @@ module.exports = function (ret, conf, settings, opt) {
     
     fis.util.map(ret.src, function(subpath, file) {
         
-        if (file.isHtmlLike && file.isViews) {
+        if (file.isHtmlLike && file.isViews && file.usePerformance!==false) {
             
             var content = file.getContent();
             
